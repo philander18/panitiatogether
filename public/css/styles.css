@@ -1,0 +1,184 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Mukta", sans-serif;
+}
+
+body, .modal-content {
+    background-image: url(../images/background.png);
+    background-repeat: repeat;
+}
+
+.mukta-extralight {
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .mukta-light {
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .mukta-regular {
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .mukta-medium {
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .mukta-semibold {
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .mukta-bold {
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .mukta-extrabold {
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+.konten-daftar {
+    display: grid;
+    grid-template-columns: minmax(360px, 1fr);
+    grid-template-areas: 'daftar'
+        'detail';
+}
+
+.container {
+    display: grid;
+    grid-template-columns: minmax(360px, 450px);
+    place-content: center;
+    grid-template-areas: 'login';
+}
+.form-login {
+    grid-area: login;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 5px;
+}
+.form-login h1:nth-child(1){
+    margin-top: 15vh;
+    margin-bottom: 25px;
+}
+.form-login div:nth-child(3){
+    position: relative;
+}
+.form-login div:nth-child(3) span:nth-child(2){
+    position: absolute;
+    top: 11px;
+    right: 15px;
+}
+.form-login img:last-child{
+    margin-top: 28px;
+}
+span.fa {
+    top: 5;
+    right: 0;
+}
+
+
+.daftar {
+    grid-area: daftar;
+    text-align: center;
+    margin-top: 15px;
+    /* border: 2px black solid;
+    border-radius: 8px;
+    box-shadow: 6px 6px 4px rgb(41, 7, 233);
+    padding: 8px;
+    box-sizing: border-box; */
+}
+.detail {
+    grid-area: detail;
+    margin-top: 15px;
+    /* border: 2px black solid;
+    border-radius: 8px;
+    box-shadow: 6px 6px 4px rgb(41, 7, 233);
+    padding: 8px;
+    box-sizing: border-box; */
+}
+
+div.daftar img {
+    width: 50%;
+    margin-bottom: 15px;
+}
+div input {
+    background-color: blue;
+}
+
+@media screen and (min-width:922px) {
+    .konten-daftar {
+        grid-template-columns: minmax(360px, 1fr) 2fr;
+        grid-template-areas: 'daftar detail';
+    }
+   .konten-daftar div.detail {
+    margin-left: 40px;
+   }
+}
+
+div.page ul{
+    display: flex;
+    margin-top: 1rem;
+    list-style: none;
+    border-right: 1px solid black;
+    border-radius: 8px;
+    margin-left: -2rem;
+}
+
+div.page ul li {
+    flex: 1;
+    background-color: rgb(255, 255, 255,0.2);
+    text-align: center;
+    border-left: 1px solid black;
+}
+div.page ul li:first-child {
+    border-left: 1px solid black;
+    border-radius: 8px;
+}
+div.page ul li a{
+    color: black;
+    padding: 2px;
+}
+
+
+
+/* Mengatur grid 3 kolom */
+/* .item-3 {
+    display: flex;
+    padding: 2px 6px;
+    justify-content: start;
+    align-items: start;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+}
+.item-3:nth-child(1), .item-3:nth-child(2), .item-3:nth-child(3) {
+    border-top: 1px solid black;
+    justify-content: center;
+}
+.item-3:nth-child(3n) {
+    border-right: 1px solid black;
+} */
+
+.bg-form-30 {
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+div.form-modal {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+div.form-modal label {
+    flex: 1;
+    text-align: center;
+}
+div.form-modal input,div.form-modal textarea {
+    flex: 4;
+}
