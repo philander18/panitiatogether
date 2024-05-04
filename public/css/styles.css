@@ -64,13 +64,13 @@ body, .modal-content {
     padding: 5px;
 }
 .form-login h1:nth-child(1){
-    margin-top: 15vh;
+    margin-top: 8vh;
     margin-bottom: 25px;
 }
-.form-login div:nth-child(3){
+.input_password{
     position: relative;
 }
-.form-login div:nth-child(3) span:nth-child(2){
+span.mata {
     position: absolute;
     top: 11px;
     right: 15px;
@@ -83,102 +83,43 @@ span.fa {
     right: 0;
 }
 
-
-.daftar {
-    grid-area: daftar;
-    text-align: center;
-    margin-top: 15px;
-    /* border: 2px black solid;
-    border-radius: 8px;
-    box-shadow: 6px 6px 4px rgb(41, 7, 233);
-    padding: 8px;
-    box-sizing: border-box; */
-}
-.detail {
-    grid-area: detail;
-    margin-top: 15px;
-    /* border: 2px black solid;
-    border-radius: 8px;
-    box-shadow: 6px 6px 4px rgb(41, 7, 233);
-    padding: 8px;
-    box-sizing: border-box; */
-}
-
-div.daftar img {
-    width: 50%;
-    margin-bottom: 15px;
-}
-div input {
-    background-color: blue;
-}
-
-@media screen and (min-width:922px) {
-    .konten-daftar {
-        grid-template-columns: minmax(360px, 1fr) 2fr;
-        grid-template-areas: 'daftar detail';
-    }
-   .konten-daftar div.detail {
-    margin-left: 40px;
-   }
-}
-
-div.page ul{
-    display: flex;
+.konten-menu {
+    display: grid;
+    grid-template-columns: minmax(360px, 600px);
+    place-content: center;
     margin-top: 1rem;
-    list-style: none;
-    border-right: 1px solid black;
-    border-radius: 8px;
-    margin-left: -2rem;
 }
-
-div.page ul li {
-    flex: 1;
-    background-color: rgb(255, 255, 255,0.2);
-    text-align: center;
-    border-left: 1px solid black;
+.konten-menu img {
+    place-self: center;
+    margin-bottom: 1.5rem;
 }
-div.page ul li:first-child {
-    border-left: 1px solid black;
-    border-radius: 8px;
+.menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    row-gap: 1.5rem;
 }
-div.page ul li a{
-    color: black;
-    padding: 2px;
-}
-
-
-
-/* Mengatur grid 3 kolom */
-/* .item-3 {
-    display: flex;
-    padding: 2px 6px;
-    justify-content: start;
-    align-items: start;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
-    box-sizing: border-box;
-}
-.item-3:nth-child(1), .item-3:nth-child(2), .item-3:nth-child(3) {
-    border-top: 1px solid black;
-    justify-content: center;
-}
-.item-3:nth-child(3n) {
-    border-right: 1px solid black;
-} */
-
-.bg-form-30 {
-    background-color: rgb(255, 255, 255, 0.3);
-}
-
-div.form-modal {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-}
-div.form-modal label {
-    flex: 1;
+.menu a {
+    font-size: 1.2rem;
     text-align: center;
 }
-div.form-modal input,div.form-modal textarea {
-    flex: 4;
+
+.konten-bendahara {
+    display: grid;
+    grid-template-columns: minmax(360px, 450px);
+    place-content: center;
+    margin-top: 1rem;
+    grid-template-areas: 'search'
+        'tabel';
+}
+.bendahara-search {
+    grid-area: search;
+    display: grid;
+    grid-template-columns: 60px 1fr 80px;
+    column-gap: 5px;
+    place-items: center;
+}
+.bendahara-search a {
+    font-size: 1rem;
+    text-align: center;
 }

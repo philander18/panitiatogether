@@ -2,7 +2,7 @@
 
 namespace Myth\Auth\Authentication\Passwords;
 
-use CodeIgniter\Entity;
+use Myth\Auth\Entities\User;
 
 interface ValidatorInterface
 {
@@ -13,7 +13,7 @@ interface ValidatorInterface
      * the password will be passed to any remaining validators.
      * False will immediately stop validation process
      */
-    public function check(string $password, ?Entity $user = null): bool;
+    public function check(string $password, ?User $user = null): bool;
 
     /**
      * Returns the error string that should be displayed to the user.

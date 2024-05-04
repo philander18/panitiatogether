@@ -7,8 +7,8 @@ class Home extends BaseController
     public function index(): string
     {
         $data = [
-            'judul' => 'Pendaftaran',
+            'judul' => 'Home',
         ];
-        return view('Auth/login', $data);
+        return view('Home/index', $data);
     }
 }

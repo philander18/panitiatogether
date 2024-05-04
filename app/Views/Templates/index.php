@@ -23,8 +23,8 @@
     <script src="<?= base_url(); ?>public/js/all.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <?= $this->include('Templates/script'); ?>
-    <?= $this->include('Auth/script'); ?>
     <?= $this->include('Home/script'); ?>
+    <?= $this->include('Bendahara/script'); ?>
 </body>
 
 </html>
