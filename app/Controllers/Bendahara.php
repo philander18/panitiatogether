@@ -30,15 +30,15 @@ class Bendahara extends BaseController
 
     public function searchDataPanitia()
     {
-        if (empty($this->BendaharaModel->statusSummary(user()->username))) {
-            $summary['pic'] = false;
-            $summary['total'] = false;
-        } else {
-            $summary = $this->BendaharaModel->statusSummary(user()->username)[0];
-            if ($this->BendaharaModel->setorPIC(user()->username)) {
-                $summary['total'] = $summary['total'] - $this->BendaharaModel->setorPIC(user()->username)[0]['total'];
-            }
-        }
+        // if (empty($this->BendaharaModel->statusSummary(user()->username))) {
+        //     $summary['pic'] = false;
+        //     $summary['total'] = false;
+        // } else {
+        //     $summary = $this->BendaharaModel->statusSummary(user()->username)[0];
+        //     if ($this->BendaharaModel->setorPIC(user()->username)) {
+        //         $summary['total'] = $summary['total'] - $this->BendaharaModel->setorPIC(user()->username)[0]['total'];
+        //     }
+        // }
         $page = $_POST['page'];
         $keyword = $_POST['keyword'];
         if ($page == 1) {
@@ -56,7 +56,7 @@ class Bendahara extends BaseController
             'last' => $last,
             'jumlah' => $jumlah,
             'page' => $page,
-            'summary' => $summary,
+            // 'summary' => $summary,
         ];
         echo view('Bendahara/Tabel/panitia', $data);
     }
@@ -83,16 +83,15 @@ class Bendahara extends BaseController
         } else {
             session()->setFlashdata('pesan', 'Update nama ' . $_POST['nama'] . ' Gagal.');
         }
-        // $this->searchDataPanitia();
-        if (empty($this->BendaharaModel->statusSummary(user()->username))) {
-            $summary['pic'] = false;
-            $summary['total'] = false;
-        } else {
-            $summary = $this->BendaharaModel->statusSummary(user()->username)[0];
-            if ($this->BendaharaModel->setorPIC(user()->username)) {
-                $summary['total'] = $summary['total'] - $this->BendaharaModel->setorPIC(user()->username)[0]['total'];
-            }
-        }
+        // if (empty($this->BendaharaModel->statusSummary(user()->username))) {
+        //     $summary['pic'] = false;
+        //     $summary['total'] = false;
+        // } else {
+        //     $summary = $this->BendaharaModel->statusSummary(user()->username)[0];
+        //     if ($this->BendaharaModel->setorPIC(user()->username)) {
+        //         $summary['total'] = $summary['total'] - $this->BendaharaModel->setorPIC(user()->username)[0]['total'];
+        //     }
+        // }
         $page = $_POST['page'];
         $keyword = $_POST['keyword'];
         if ($page == 1) {
@@ -110,9 +109,8 @@ class Bendahara extends BaseController
             'last' => $last,
             'jumlah' => $jumlah,
             'page' => $page,
-            'summary' => $summary
         ];
-        echo view('Bendahara/tabel/panitia', $data);
+        echo view('Bendahara/Tabel/panitia', $data);
     }
 
     public function pagination($page, $lastpage)

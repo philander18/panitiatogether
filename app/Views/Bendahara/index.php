@@ -31,7 +31,7 @@
                         </td>
                         <td class="text-center align-middle m-1 p-1" style="width: 30%;">
                             <?php if (is_null($row['bayar'])) : ?>
-                                <i class="fas fa-circle-xmark" id="status"></i>
+                                <i class="fa-solid fa-circle-xmark" id="status"></i>
                             <?php else : ?>
                                 <?= number_format($row["bayar"], 0, ',', '.'); ?>
                             <?php endif; ?>
@@ -93,7 +93,7 @@
             </div>
             <div class="modal-body" style="padding-top:2px;">
                 <input type="hidden" name="id" id="id" value="">
-                <input type="hidden" name="siapa" id="siapa" value="<?= has_permission('bendahara'); ?>">
+                <input type="hidden" name="siapa" id="siapa" value="<?= user()->username == 'hadasa'; ?>">
                 <div class="form-group">
                     <label class="text-dark fw-bold ms-2 mb-2" id="pic" name="pic">Belum dibayar</label>
                 </div>

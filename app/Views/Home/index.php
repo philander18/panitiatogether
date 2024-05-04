@@ -10,6 +10,7 @@
         <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>" role="button" style="width: 80%; ">Konsumsi</a>
         <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>" role="button" style="width: 80%; ">Perlengkapan</a>
         <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>" role="button" style="width: 80%; ">Kesehatan</a>
+        <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>logout" role="button" style="width: 80%; ">Logout</a>
     </div>
 </div>
 <?= $this->endSection(); ?>

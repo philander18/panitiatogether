@@ -22,7 +22,7 @@
                 </td>
                 <td class="text-center align-middle m-1 p-1" style="width: 30%;">
                     <?php if (is_null($row['bayar'])) : ?>
-                        <i class="fas fa-circle-xmark" id="status"></i>
+                        <i class="fa-solid fa-circle-xmark" id="status"></i>
                     <?php else : ?>
                         <?= number_format($row["bayar"], 0, ',', '.'); ?>
                     <?php endif; ?>
@@ -73,3 +73,62 @@
     </nav>
 <?php endif; ?>
 <h5 class="text-black text-start" style="text-shadow: 2px 2px white;">Jumlah Data : <?= $jumlah; ?></h5>
+<script>
+    $(document).ready(function() {
+        $('.modalpanitia').on('click', function() {
+            const id = $(this).data('id');
+            clear_form_panitia();
+            $('#modalnama').prop('disabled', true);
+            $('#hp').prop('disabled', true);
+            $('#gender').prop('disabled', true);
+            $('#gereja').prop('disabled', true);
+            if ($('#siapa').val() == 1) {
+                $('#updatepanitia').prop('hidden', false);
+            } else {
+                $('#updatepanitia').prop('hidden', true);
+            }
+            $.ajax({
+                url: method_url('Bendahara', 'getdata'),
+                data: {
+                    id: id,
+                },
+                method: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    $('#modalnama').val(data.nama);
+                    $('#hp').val(data.hp);
+                    $('#gender').val(data.gender);
+                    $('#gereja').val(data.gereja);
+                    $('#bayar').val(data.bayar);
+                    $('#id').val(data.id);
+                    if (data.pic === null) {
+                        $('#pic').html('Belum Dibayar');
+                    } else {
+                        $('#pic').html('Penerima : ' + data.pic);
+                    }
+
+                }
+            });
+        });
+        $('.dihapus').on('click', function() {
+            $('#idhapus').val($(this).data('id'))
+        });
+        $(".linkP").on('click', function() {
+            var page = $(this).data('page'),
+                baseurl = $('#baseurl').val(),
+                keyword = $('#keywordpanitia').val();
+            $.ajax({
+                url: method_url(baseurl, 'Home', 'searchDataPanitia'),
+                data: {
+                    keyword: keyword,
+                    page: page,
+                },
+                method: 'post',
+                dataType: 'html',
+                success: function(data) {
+                    $('.tabelDataPendaftaran').html(data);
+                }
+            });
+        });
+    });
+</script>

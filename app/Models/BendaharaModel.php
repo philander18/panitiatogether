@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class BendaharaModel extends Model
 {
     protected $table = 'peserta';
-    protected $allowedFields = ['nama', 'hp', 'gender', 'gereja', 'kata', 'updated_at'];
+    protected $allowedFields = ['nama', 'hp', 'gender', 'gereja', 'kata', 'bayar', 'pic', 'status', 'updated_at'];
 
     public function listgereja()
     {
@@ -16,7 +16,7 @@ class BendaharaModel extends Model
     public function searchnama($keyword, $jumlahlist, $index)
     {
         $where = "nama like '%" . $keyword . "%'";
-        $all = $this->db->table('peserta')->select('id, nama, hp, bayar')->where($where)->orderBy('nama', 'ASC')->get()->getResultArray();
+        $all = $this->db->table('peserta')->select('id, nama, hp, pic, bayar')->where($where)->orderBy('nama', 'ASC')->get()->getResultArray();
         $jumlahdata = count($all);
         $lastpage = ceil($jumlahdata / $jumlahlist);
         $tabel = array_splice($all, $index);
@@ -37,8 +37,8 @@ class BendaharaModel extends Model
     {
         return $this->db->table('peserta')->where('id', $id)->update($data);
     }
-    public function statusSummary($pic)
-    {
-        return $this->db->table('peserta')->select('pic, sum(bayar) as total')->where('pic', $pic)->groupBy('pic')->orderBy('total', 'desc')->get()->getResultArray();
-    }
+    // public function statusSummary($pic)
+    // {
+    //     return $this->db->table('peserta')->select('pic, sum(bayar) as total')->where('pic', $pic)->groupBy('pic')->orderBy('total', 'desc')->get()->getResultArray();
+    // }
 }
