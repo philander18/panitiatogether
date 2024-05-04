@@ -79,9 +79,6 @@
             const id = $(this).data('id');
             clear_form_panitia();
             $('#modalnama').prop('disabled', true);
-            $('#hp').prop('disabled', true);
-            $('#gender').prop('disabled', true);
-            $('#gereja').prop('disabled', true);
             if ($('#siapa').val() == 1) {
                 $('#updatepanitia').prop('hidden', false);
             } else {
