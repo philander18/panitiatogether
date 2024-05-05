@@ -23,6 +23,9 @@
                 <td class="text-center align-middle m-1 p-1" style="width: 30%;">
                     <?php if (is_null($row['bayar'])) : ?>
                         <i class="fa-solid fa-circle-xmark" id="status"></i>
+                        <?php if (user()->username == 'hadasa') : ?>
+                            <button type="button" id="status" class="btn btn-danger btn-sm dihapus text-dark ms-2 fw-bold" data-bs-toggle="modal" data-bs-target="#formhapus" data-id="<?= $row["id"]; ?>">Delete</button>
+                        <?php endif; ?>
                     <?php else : ?>
                         <?= number_format($row["bayar"], 0, ',', '.'); ?>
                     <?php endif; ?>
@@ -36,37 +39,37 @@
         <ul class="pagination">
             <?php if ($pagination['first']) : ?>
                 <li class="page-item">
-                    <a class="page-link text-dark linkD" href="#" aria-label="First" id="first" name="first" data-page="1">
+                    <button class="page-link text-dark linkD" aria-label="First" id="first" name="first" data-page="1">
                         <span aria-hidden="false">First</span>
-                    </a>
+                    </button>
                 </li>
             <?php endif ?>
             <?php if ($pagination['previous']) : ?>
                 <li class="page-item">
-                    <a class="page-link text-dark linkD" href="#" aria-label="Previous" id="previous" name="previous" data-page="<?= $page - 1; ?>">
+                    <button class="page-link text-dark linkD" aria-label="Previous" id="previous" name="previous" data-page="<?= $page - 1; ?>">
                         <span aria-hidden=" true">Previous</span>
-                    </a>
+                    </button>
                 </li>
             <?php endif ?>
             <?php foreach ($pagination['number'] as $number) : ?>
                 <li class="page-item <?= $pagination['page'] == $number ? 'active' : '' ?>">
-                    <a class="page-link text-dark linkD" href="#" id="nomor<?= $number; ?>" name="nomor<?= $number; ?>" data-page="<?= $number; ?>">
+                    <button class="page-link text-dark linkD" id="nomor<?= $number; ?>" name="nomor<?= $number; ?>" data-page="<?= $number; ?>">
                         <span aria-hidden="true"><?= $number; ?></span>
-                    </a>
+                    </button>
                 </li>
             <?php endforeach ?>
             <?php if ($pagination['next']) : ?>
                 <li class="page-item">
-                    <a class="page-link text-dark linkD" href="#" aria-label="Next" id="next" name="next" data-page="<?= $page + 1; ?>">
+                    <button class="page-link text-dark linkD" aria-label="Next" id="next" name="next" data-page="<?= $page + 1; ?>">
                         <span aria-hidden=" true">Next</span>
-                    </a>
+                    </button>
                 </li>
             <?php endif ?>
             <?php if ($pagination['last']) : ?>
                 <li class="page-item">
-                    <a class="page-link text-dark linkD" href="#" aria-label="<?= $last; ?>" id="last" name="last" data-page="<?= $last; ?>">
+                    <button class="page-link text-dark linkD" aria-label="<?= $last; ?>" id="last" name="last" data-page="<?= $last; ?>">
                         <span aria-hidden="true"><?= $last; ?></span>
-                    </a>
+                    </button>
                 </li>
             <?php endif ?>
         </ul>
@@ -110,12 +113,11 @@
         $('.dihapus').on('click', function() {
             $('#idhapus').val($(this).data('id'))
         });
-        $(".linkP").on('click', function() {
+        $(".linkD").on('click', function() {
             var page = $(this).data('page'),
-                baseurl = $('#baseurl').val(),
                 keyword = $('#keywordpanitia').val();
             $.ajax({
-                url: method_url(baseurl, 'Home', 'searchDataPanitia'),
+                url: method_url('Bendahara', 'searchDataPanitia'),
                 data: {
                     keyword: keyword,
                     page: page,
@@ -123,7 +125,7 @@
                 method: 'post',
                 dataType: 'html',
                 success: function(data) {
-                    $('.tabelDataPendaftaran').html(data);
+                    $('.tabelDataPanitia').html(data);
                 }
             });
         });

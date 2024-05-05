@@ -30,15 +30,6 @@ class Bendahara extends BaseController
 
     public function searchDataPanitia()
     {
-        // if (empty($this->BendaharaModel->statusSummary(user()->username))) {
-        //     $summary['pic'] = false;
-        //     $summary['total'] = false;
-        // } else {
-        //     $summary = $this->BendaharaModel->statusSummary(user()->username)[0];
-        //     if ($this->BendaharaModel->setorPIC(user()->username)) {
-        //         $summary['total'] = $summary['total'] - $this->BendaharaModel->setorPIC(user()->username)[0]['total'];
-        //     }
-        // }
         $page = $_POST['page'];
         $keyword = $_POST['keyword'];
         if ($page == 1) {
@@ -56,7 +47,6 @@ class Bendahara extends BaseController
             'last' => $last,
             'jumlah' => $jumlah,
             'page' => $page,
-            // 'summary' => $summary,
         ];
         echo view('Bendahara/Tabel/panitia', $data);
     }
@@ -113,6 +103,34 @@ class Bendahara extends BaseController
         echo view('Bendahara/Tabel/panitia', $data);
     }
 
+    public function deletepeserta()
+    {
+        $nama = $this->BendaharaModel->select('nama')->where(['id' => $_POST['id']])->first()['nama'];
+        if ($this->BendaharaModel->delete(['id' => $_POST['id']])) {
+            session()->setFlashdata('pesan', 'Hapus nama  ' . $nama . ' Berhasil.');
+        } else {
+            session()->setFlashdata('pesan', 'Hapus nama ' . $nama . ' Gagal.');
+        }
+        $page = 1;
+        $keyword = '';
+        if ($page == 1) {
+            $index = 0;
+        } else {
+            $index = ($page - 1) * $this->jumlahlist;
+        }
+        $peserta = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['tabel'];
+        $last = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['lastpage'];
+        $jumlah = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['jumlah'];
+        $pagination = $this->pagination($page, $last);
+        $data = [
+            'peserta' => $peserta,
+            'pagination' => $pagination,
+            'last' => $last,
+            'jumlah' => $jumlah,
+            'page' => $page,
+        ];
+        echo view('Bendahara/Tabel/panitia', $data);
+    }
     public function pagination($page, $lastpage)
     {
         $pagination = [

@@ -128,45 +128,26 @@
         });
 
         $('.hapus').on('click', function() {
-            var id = $('#idhapus').val(),
-                baseurl = $('#baseurl').val();
+            var id = $('#idhapus').val();
             $.ajax({
-                url: method_url(baseurl, 'Home', 'deletejemaat'),
+                url: method_url('Bendahara', 'deletepeserta'),
                 data: {
                     id: id,
                 },
                 method: 'post',
                 dataType: 'html',
                 success: function(data) {
-                    $('.tabelDataPendaftaran').html(data);
+                    $('.tabelDataPanitia').html(data);
                 }
             });
         });
 
         $(".linkD").on('click', function() {
             var page = $(this).data('page'),
-                baseurl = $('#baseurl').val(),
-                keyword = $('#keyword').val();
-            $.ajax({
-                url: method_url(baseurl, 'Home', 'searchData'),
-                data: {
-                    keyword: keyword,
-                    page: page,
-                },
-                method: 'post',
-                dataType: 'html',
-                success: function(data) {
-                    $('.tabelDataPendaftaran').html(data);
-                }
-            });
-        });
-
-        $(".linkP").on('click', function() {
-            var page = $(this).data('page'),
-                baseurl = $('#baseurl').val(),
                 keyword = $('#keywordpanitia').val();
+            console.log('ok');
             $.ajax({
-                url: method_url(baseurl, 'Home', 'searchDataPanitia'),
+                url: method_url('Bendahara', 'searchDataPanitia'),
                 data: {
                     keyword: keyword,
                     page: page,
@@ -174,7 +155,8 @@
                 method: 'post',
                 dataType: 'html',
                 success: function(data) {
-                    $('.tabelDataPendaftaran').html(data);
+                    console.log('ok');
+                    $('.tabelDataPanitia').html(data);
                 }
             });
         });
