@@ -138,6 +138,7 @@
                 dataType: 'html',
                 success: function(data) {
                     $('.tabelDataPanitia').html(data);
+                    $('#keywordpanitia').val('');
                 }
             });
         });
