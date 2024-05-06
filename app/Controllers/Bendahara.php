@@ -24,6 +24,8 @@ class Bendahara extends BaseController
             'last' => $this->BendaharaModel->searchnama("", $this->jumlahlist, 0)['lastpage'],
             'jumlah' => $this->BendaharaModel->searchnama("", $this->jumlahlist, 0)['jumlah'],
             'page' => $page,
+            'halaman' => 'bendahara',
+            'method' => 'pendaftaran'
         ];
         return view('Bendahara/index', $data);
     }

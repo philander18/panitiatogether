@@ -15,4 +15,9 @@
             }
         });
     }
+    $(document).ready(function() {
+        $('.menu-toggles input').on('click', function() {
+            $('nav ul').toggleClass('slide');
+        });
+    })
 </script>

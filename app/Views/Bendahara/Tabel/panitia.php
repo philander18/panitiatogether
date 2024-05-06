@@ -35,7 +35,7 @@
     </tbody>
 </table>
 <?php if ($peserta) : ?>
-    <nav aria-label="Page navigation">
+    <div aria-label="Page navigation">
         <ul class="pagination">
             <?php if ($pagination['first']) : ?>
                 <li class="page-item">
@@ -73,7 +73,7 @@
                 </li>
             <?php endif ?>
         </ul>
-    </nav>
+    </div>
 <?php endif; ?>
 <h5 class="text-black text-start" style="text-shadow: 2px 2px white;">Jumlah Data : <?= $jumlah; ?></h5>
 <script>

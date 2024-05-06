@@ -1,10 +1,10 @@
 <?= $this->extend('Templates/index'); ?>
 <?= $this->section('page-content'); ?>
+<?= $this->include('Templates/nav'); ?>
 <div class="konten-bendahara">
     <div class="bendahara-search">
         <label class="text-dark">Search :</label>
         <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keywordpanitia" name="keywordpanitia">
-        <a class="btn btn-primary text-dark fw-bold" href="<?= base_url(); ?>" role="button">Home</a>
     </div>
     <div class="bendahara-tabel mt-2 tabelDataPanitia p-0">
         <div class="flash">
@@ -44,7 +44,7 @@
             </tbody>
         </table>
         <?php if ($peserta) : ?>
-            <nav aria-label="Page navigation">
+            <div aria-label="Page navigation">
                 <ul class="pagination">
                     <?php if ($pagination['first']) : ?>
                         <li class="page-item">
@@ -82,7 +82,7 @@
                         </li>
                     <?php endif ?>
                 </ul>
-            </nav>
+            </div>
         <?php endif; ?>
         <h5 class="text-black text-start" style="text-shadow: 2px 2px white;">Jumlah Data : <?= $jumlah; ?></h5>
     </div>
