@@ -37,8 +37,4 @@ class BendaharaModel extends Model
     {
         return $this->db->table('peserta')->where('id', $id)->update($data);
     }
-    // public function statusSummary($pic)
-    // {
-    //     return $this->db->table('peserta')->select('pic, sum(bayar) as total')->where('pic', $pic)->groupBy('pic')->orderBy('total', 'desc')->get()->getResultArray();
-    // }
 }

@@ -3,7 +3,7 @@
 <div class="konten-menu">
     <img src="<?= base_url(); ?>public/images/together.png" alt="Logo Together" width="60%">
     <div class="menu">
-        <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>" role="button" style="width: 80%;">Pengurus</a>
+        <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>pengurus" role="button" style="width: 80%;">Pengurus</a>
         <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>" role="button" style="width: 80%;">Ketua</a>
         <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>" role="button" style="width: 80%; ">Sekretaris</a>
         <a class="btn btn-primary fw-bold" href="<?= base_url(); ?>bendahara" role="button" style="width: 80%; ">Bendahara</a>

@@ -6,6 +6,9 @@
         <li><a href="<?= base_url(); ?>">Home</a></li>
         <li><a href="" class="<?= ($method == 'rencana') ? "aktif" : ""; ?>">Rencana</a></li>
         <li><a href="" class="<?= ($method == 'hasil') ? "aktif" : ""; ?>">Hasil</a></li>
+        <?php if (($halaman == "pengurus") || ($halaman == "ketua") || ($halaman == "sekretaris") || ($halaman == "bendahara")) : ?>
+            <li><a href="" class="<?= ($method == 'approval') ? "aktif" : ""; ?>">Approval</a></li>
+        <?php endif ?>
         <?php if ($halaman == "bendahara") : ?>
             <li><a href="" class="<?= ($method == 'pendaftaran') ? "aktif" : ""; ?>">Pendaftaran</a></li>
             <li><a href="" class="<?= ($method == 'keuangan') ? "aktif" : ""; ?>">Keuangan</a></li>
