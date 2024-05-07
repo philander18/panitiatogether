@@ -7,16 +7,25 @@ use CodeIgniter\Model;
 class BendaharaModel extends Model
 {
     protected $table = 'peserta';
-    protected $allowedFields = ['nama', 'hp', 'gender', 'gereja', 'kata', 'bayar', 'pic', 'status', 'updated_at'];
+    protected $allowedFields = ['nama', 'hp', 'gender', 'gereja', 'kata', 'bayar', 'pic', 'wa', 'updated_at'];
 
     public function listgereja()
     {
         return $this->db->table('gereja')->select('nama')->orderBy('nama', 'asc')->get()->getResultArray();
     }
-    public function searchnama($keyword, $jumlahlist, $index)
+    public function searchnama($keyword, $jumlahlist, $index, $filter)
     {
-        $where = "nama like '%" . $keyword . "%'";
-        $all = $this->db->table('peserta')->select('id, nama, hp, pic, bayar')->where($where)->orderBy('nama', 'ASC')->get()->getResultArray();
+        if ($filter == 1) {
+            $where = "nama like '%" . $keyword . "%'";
+            $order = "nama ASC";
+        } elseif ($filter == 2) {
+            $where = "nama like '%" . $keyword . "%' and bayar is not null";
+            $order = "wa ASC";
+        } else {
+            $where = "nama like '%" . $keyword . "%' and bayar is null";
+            $order = "nama ASC";
+        }
+        $all = $this->db->table('peserta')->select('id, nama, hp, pic, bayar, wa')->where($where)->orderBy($order)->get()->getResultArray();
         $jumlahdata = count($all);
         $lastpage = ceil($jumlahdata / $jumlahlist);
         $tabel = array_splice($all, $index);

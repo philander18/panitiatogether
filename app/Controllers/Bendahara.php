@@ -19,10 +19,10 @@ class Bendahara extends BaseController
         $data = [
             'judul' => 'Bendahara',
             'listgereja' => $this->BendaharaModel->listgereja(),
-            'peserta' => $this->BendaharaModel->searchnama("", $this->jumlahlist, 0)['tabel'],
-            'pagination' => $this->pagination($page, $this->BendaharaModel->searchnama("", $this->jumlahlist, 0)['lastpage']),
-            'last' => $this->BendaharaModel->searchnama("", $this->jumlahlist, 0)['lastpage'],
-            'jumlah' => $this->BendaharaModel->searchnama("", $this->jumlahlist, 0)['jumlah'],
+            'peserta' => $this->BendaharaModel->searchnama("", $this->jumlahlist, 0, 1)['tabel'],
+            'pagination' => $this->pagination($page, $this->BendaharaModel->searchnama("", $this->jumlahlist, 0, 1)['lastpage']),
+            'last' => $this->BendaharaModel->searchnama("", $this->jumlahlist, 0, 1)['lastpage'],
+            'jumlah' => $this->BendaharaModel->searchnama("", $this->jumlahlist, 0, 1)['jumlah'],
             'page' => $page,
             'halaman' => 'bendahara',
             'method' => 'pendaftaran'
@@ -34,14 +34,15 @@ class Bendahara extends BaseController
     {
         $page = $_POST['page'];
         $keyword = $_POST['keyword'];
+        $filter = $_POST['filter'];
         if ($page == 1) {
             $index = 0;
         } else {
             $index = ($page - 1) * $this->jumlahlist;
         }
-        $peserta = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['tabel'];
-        $last = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['lastpage'];
-        $jumlah = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['jumlah'];
+        $peserta = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, $filter)['tabel'];
+        $last = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, $filter)['lastpage'];
+        $jumlah = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, $filter)['jumlah'];
         $pagination = $this->pagination($page, $last);
         $data = [
             'peserta' => $peserta,
@@ -62,14 +63,21 @@ class Bendahara extends BaseController
         $date = new DateTime();
         $date = $date->format('Y-m-d H:i:s');
         $id = $_POST['id'];
-        $dataupdate = [
-            'hp' => $_POST['hp'],
-            'gender' => $_POST['gender'],
-            'gereja' => $_POST['gereja'],
-            'bayar' => $_POST['bayar'],
-            'pic' => user()->username,
-            'updated_at' => $date
-        ];
+        if (user()->username == 'elisabeth') {
+            $dataupdate = [
+                'wa' => $_POST['wa'],
+            ];
+        } else {
+            $dataupdate = [
+                'hp' => $_POST['hp'],
+                'gender' => $_POST['gender'],
+                'gereja' => $_POST['gereja'],
+                'wa' => $_POST['wa'],
+                'bayar' => $_POST['bayar'],
+                'pic' => user()->username,
+                'updated_at' => $date
+            ];
+        }
         if ($this->BendaharaModel->updatepeserta($dataupdate, $id)) {
             session()->setFlashdata('pesan', 'Update nama  ' . $_POST['nama'] . ' Berhasil.');
         } else {
@@ -86,14 +94,15 @@ class Bendahara extends BaseController
         // }
         $page = $_POST['page'];
         $keyword = $_POST['keyword'];
+        $filter = $_POST['filter'];
         if ($page == 1) {
             $index = 0;
         } else {
             $index = ($page - 1) * $this->jumlahlist;
         }
-        $peserta = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['tabel'];
-        $last = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['lastpage'];
-        $jumlah = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['jumlah'];
+        $peserta = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, $filter)['tabel'];
+        $last = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, $filter)['lastpage'];
+        $jumlah = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, $filter)['jumlah'];
         $pagination = $this->pagination($page, $last);
         $data = [
             'peserta' => $peserta,
@@ -120,9 +129,9 @@ class Bendahara extends BaseController
         } else {
             $index = ($page - 1) * $this->jumlahlist;
         }
-        $peserta = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['tabel'];
-        $last = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['lastpage'];
-        $jumlah = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index)['jumlah'];
+        $peserta = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, 1)['tabel'];
+        $last = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, 1)['lastpage'];
+        $jumlah = $this->BendaharaModel->searchnama($keyword, $this->jumlahlist, $index, 1)['jumlah'];
         $pagination = $this->pagination($page, $last);
         $data = [
             'peserta' => $peserta,

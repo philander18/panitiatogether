@@ -5,6 +5,11 @@
     <div class="bendahara-search">
         <label class="text-dark">Search :</label>
         <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keywordpanitia" name="keywordpanitia">
+        <select class="form-select form-select-sm" aria-label="status pembayaran" name="status_bayar" id="status_bayar">
+            <option value="1" selected>All</option>
+            <option value="2">Sudah Bayar</option>
+            <option value="3">Belum Bayar</option>
+        </select>
     </div>
     <div class="bendahara-tabel mt-2 tabelDataPanitia p-0">
         <div class="flash">
@@ -25,7 +30,7 @@
                 <?php foreach ($peserta as $row) : ?>
                     <tr>
                         <td class="text-center align-middle m-1 p-1 text-dark" style="width: 70%;">
-                            <a href="" class="link-primary modalpanitia" data-bs-toggle="modal" data-bs-target="#formpanitia" data-id="<?= $row["id"]; ?>" name="nama" id="nama">
+                            <a href="" class="link-primary modalpanitia <?= is_null($row["bayar"]) ? "text-danger" : (($row["wa"] == 1) ? 'text-success' : 'text-primary'); ?>" data-bs-toggle="modal" data-bs-target="#formpanitia" data-id="<?= $row["id"]; ?>" name="nama" id="nama">
                                 <?= $row["nama"]; ?>
                             </a>
                         </td>
@@ -144,6 +149,19 @@
                                     <?php foreach ($listgereja as $gereja) : ?>
                                         <option value="<?= $gereja['nama']; ?>"><?= $gereja['nama']; ?></option>
                                     <?php endforeach ?>
+                                </select>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <td style="width: 30%;">
+                                <label for="wa" class="fw-bold">Group WA</label>
+                            </td>
+                            <td style="width: 70%;">
+                                <select class="form-select" aria-label=".form-select-sm example" name="wa" id="wa">
+                                    <option value="0">Belum</option>
+                                    <option value="1">Sudah</option>
                                 </select>
                             </td>
                         </div>

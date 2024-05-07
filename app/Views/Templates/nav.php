@@ -1,6 +1,6 @@
 <nav>
     <div class="logo">
-        <img src="<?= base_url(); ?>public/images/together.png" alt="Logo Together" width="100px">
+        <img src="<?= base_url(); ?>public/images/together.png" alt="Logo Together" width="100px" class="d-inline">
     </div>
     <ul>
         <li><a href="<?= base_url(); ?>">Home</a></li>
@@ -13,6 +13,7 @@
             <li><a href="" class="<?= ($method == 'pendaftaran') ? "aktif" : ""; ?>">Pendaftaran</a></li>
             <li><a href="" class="<?= ($method == 'keuangan') ? "aktif" : ""; ?>">Keuangan</a></li>
         <?php endif ?>
+        <li style="background-color: white;"><a><?= strtoupper(user()->username); ?></a></li>
     </ul>
     <div class="menu-toggles">
         <input type="checkbox">

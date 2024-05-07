@@ -16,7 +16,7 @@
         <?php foreach ($peserta as $row) : ?>
             <tr>
                 <td class="text-center align-middle m-1 p-1 text-dark" style="width: 70%;">
-                    <a href="" class="link-primary modalpanitia" data-bs-toggle="modal" data-bs-target="#formpanitia" data-id="<?= $row["id"]; ?>" name="nama" id="nama">
+                    <a href="" class="link-primary modalpanitia <?= is_null($row["bayar"]) ? "text-danger" : (($row["wa"] == 1) ? 'text-success' : 'text-primary'); ?>" data-bs-toggle="modal" data-bs-target="#formpanitia" data-id="<?= $row["id"]; ?>" name="nama" id="nama">
                         <?= $row["nama"]; ?>
                     </a>
                 </td>
@@ -81,12 +81,6 @@
         $('.modalpanitia').on('click', function() {
             const id = $(this).data('id');
             clear_form_panitia();
-            $('#modalnama').prop('disabled', true);
-            if ($('#siapa').val() == 1) {
-                $('#updatepanitia').prop('hidden', false);
-            } else {
-                $('#updatepanitia').prop('hidden', true);
-            }
             $.ajax({
                 url: method_url('Bendahara', 'getdata'),
                 data: {
@@ -99,6 +93,7 @@
                     $('#hp').val(data.hp);
                     $('#gender').val(data.gender);
                     $('#gereja').val(data.gereja);
+                    $('#wa').val(data.wa);
                     $('#bayar').val(data.bayar);
                     $('#id').val(data.id);
                     if (data.pic === null) {
@@ -106,7 +101,33 @@
                     } else {
                         $('#pic').html('Penerima : ' + data.pic);
                     }
-
+                    $('#modalnama').prop('disabled', true);
+                    $('#hp').prop('disabled', true);
+                    $('#gender').prop('disabled', true);
+                    $('#gereja').prop('disabled', true);
+                    if ("<?= has_permission('bendahara'); ?>") {
+                        $('#updatepanitia').prop('hidden', false);
+                    } else {
+                        $('#updatepanitia').prop('hidden', true);
+                    }
+                    if ("<?= user()->username == 'elisabeth'; ?>") {
+                        if (data.bayar == null) {
+                            $('#wa').prop('disabled', true);
+                            $('#updatepanitia').prop('hidden', true);
+                        } else {
+                            $('#wa').prop('disabled', false);
+                        }
+                        $('#bayar').prop('disabled', true);
+                    } else if ("<?= user()->username == 'hadasa'; ?>") {
+                        $('#hp').prop('disabled', false);
+                        $('#gender').prop('disabled', false);
+                        $('#gereja').prop('disabled', false);
+                        $('#wa').prop('disabled', true);
+                        $('#bayar').prop('disabled', false);
+                    } else {
+                        $('#wa').prop('disabled', true);
+                        $('#bayar').prop('disabled', true);
+                    }
                 }
             });
         });
@@ -115,11 +136,13 @@
         });
         $(".linkD").on('click', function() {
             var page = $(this).data('page'),
+                filter = $('#status_bayar').val(),
                 keyword = $('#keywordpanitia').val();
             $.ajax({
                 url: method_url('Bendahara', 'searchDataPanitia'),
                 data: {
                     keyword: keyword,
+                    filter: filter,
                     page: page,
                 },
                 method: 'post',
