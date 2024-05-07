@@ -10,8 +10,8 @@
             <li><a href="" class="<?= ($method == 'approval') ? "aktif" : ""; ?>">Approval</a></li>
         <?php endif ?>
         <?php if ($halaman == "bendahara") : ?>
-            <li><a href="" class="<?= ($method == 'pendaftaran') ? "aktif" : ""; ?>">Pendaftaran</a></li>
-            <li><a href="" class="<?= ($method == 'keuangan') ? "aktif" : ""; ?>">Keuangan</a></li>
+            <li><a href="<?= base_url(); ?>Bendahara" class="<?= ($method == 'pendaftaran') ? "aktif" : ""; ?>">Pendaftaran</a></li>
+            <li><a href="<?= base_url(); ?>Bendahara/keuangan" class="<?= ($method == 'keuangan') ? "aktif" : ""; ?>">Keuangan</a></li>
         <?php endif ?>
         <li style="background-color: white;"><a><?= strtoupper(user()->username); ?></a></li>
     </ul>

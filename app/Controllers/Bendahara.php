@@ -13,6 +13,7 @@ class Bendahara extends BaseController
     {
         $this->BendaharaModel = new BendaharaModel();
     }
+    // Pendaftaran
     public function index(): string
     {
         $page = 1;
@@ -28,6 +29,15 @@ class Bendahara extends BaseController
             'method' => 'pendaftaran'
         ];
         return view('Bendahara/index', $data);
+    }
+    public function keuangan()
+    {
+        $data = [
+            'judul' => 'Bendahara',
+            'halaman' => 'bendahara',
+            'method' => 'keuangan'
+        ];
+        return view('Bendahara/keuangan', $data);
     }
 
     public function searchDataPanitia()
