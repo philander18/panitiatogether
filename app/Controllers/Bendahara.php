@@ -30,15 +30,6 @@ class Bendahara extends BaseController
         ];
         return view('Bendahara/index', $data);
     }
-    public function keuangan()
-    {
-        $data = [
-            'judul' => 'Bendahara',
-            'halaman' => 'bendahara',
-            'method' => 'keuangan'
-        ];
-        return view('Bendahara/keuangan', $data);
-    }
 
     public function searchDataPanitia()
     {
@@ -152,6 +143,46 @@ class Bendahara extends BaseController
         ];
         echo view('Bendahara/Tabel/panitia', $data);
     }
+    // Menangani tambah data keuangan
+    public function input_keuangan()
+    {
+        $date = new DateTime();
+        $date = $date->format('Y-m-d H:i:s');
+        $data = [
+            'tanggal' => $_POST['tanggal'],
+            'keterangan' => $_POST['keterangan'],
+            'jenis' => $_POST['jenis'],
+            'jumlah' => $_POST['jumlah'],
+            'pic' => user()->username,
+            'updated_at' => $date
+        ];
+        $this->BendaharaModel->tambah_keuangan($data);
+    }
+    public function keuangan()
+    {
+        // $data['a'] = [
+        //     'id' => 10,
+        //     'tanggal' => '2024-04-30'
+        // ];
+        // $test = array_merge($data, $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'debit')['tabel']);
+        // d($test);
+        $page = 1;
+        $data = [
+            'judul' => 'Bendahara',
+            'debit' => $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'debit')['tabel'],
+            'pagination_debit' => $this->pagination($page, $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'debit')['lastpage']),
+            'last_debit' => $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'debit')['lastpage'],
+            'kredit' => $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'kredit')['tabel'],
+            'pagination_kredit' => $this->pagination($page, $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'kredit')['lastpage']),
+            'last_kredit' => $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'kredit')['lastpage'],
+            'page' => $page,
+            'halaman' => 'bendahara',
+            'method' => 'keuangan'
+        ];
+        return view('Bendahara/keuangan', $data);
+    }
+
+
     public function pagination($page, $lastpage)
     {
         $pagination = [

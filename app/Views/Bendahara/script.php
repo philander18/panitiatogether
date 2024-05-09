@@ -141,6 +141,36 @@
             });
         });
 
+        // Menangani tambah data keuangan
+        $('#tombol-tambah-keuangan').on('click', function() {
+            $('#tanggal').val('<?= date('Y-m-d'); ?>');
+            $('#keterangan').val('');
+            $('#jenis').val('debit');
+            $('#jumlah').val('');
+            $('#hapus-keuangan').prop('hidden', true);
+        });
+        $('#tambah-keuangan').on('click', function() {
+            const tanggal = $('#tanggal').val(),
+                keterangan = $('#keterangan').val(),
+                jenis = $('#jenis').val(),
+                jumlah = $('#jumlah').val();
+            $.ajax({
+                url: method_url('Bendahara', 'input_keuangan'),
+                data: {
+                    tanggal: tanggal,
+                    keterangan: keterangan,
+                    jenis: jenis,
+                    jumlah: jumlah,
+                },
+                method: 'post',
+                dataType: 'html',
+                success: function(data) {
+                    console.log('ok');
+                }
+            });
+        });
+
+
         $('.setor').on('click', function() {
             var jumlah = $('#jumlahSetor').val(),
                 baseurl = $('#baseurl').val();

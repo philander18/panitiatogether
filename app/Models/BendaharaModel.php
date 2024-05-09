@@ -46,4 +46,37 @@ class BendaharaModel extends Model
     {
         return $this->db->table('peserta')->where('id', $id)->update($data);
     }
+
+    // Menangani tambah data keuangan
+    function tambah_keuangan($data)
+    {
+        return $this->db->table('keuangan')->insert($data);
+    }
+    public function searchkeuangan($keyword, $jumlahlist, $index, $jenis)
+    {
+
+        if ($jenis == 'debit') {
+            $where = "keterangan like '%" . $keyword . "%' and jenis = 'debit'";
+            $all = $this->db->table('keuangan')->select('id, tanggal, keterangan, jumlah, pic, jenis')->where($where)->orderBy('tanggal DESC')->get()->getResultArray();
+            $data['pendaftaran'] = [
+                'tanggal' => '2024-04-30',
+                'keterangan' => 'Pendaftaran',
+                'jumlah' => 1000000
+            ];
+            $all = array_merge($data, $all);
+        } elseif ($jenis == 'kredit') {
+            $where = "keterangan like '%" . $keyword . "%' and jenis = 'kredit'";
+            $all = $this->db->table('keuangan')->select('id, tanggal, keterangan, jumlah, pic, jenis')->where($where)->orderBy('tanggal DESC')->get()->getResultArray();
+        } else {
+            $where = "keterangan like '%" . $keyword . "%'";
+        }
+        $jumlahdata = count($all);
+        $lastpage = ceil($jumlahdata / $jumlahlist);
+        $tabel = array_splice($all, $index);
+        array_splice($tabel, $jumlahlist);
+        $data['lastpage'] = $lastpage;
+        $data['tabel'] = $tabel;
+        $data['jumlah'] = $jumlahdata;
+        return $data;
+    }
 }

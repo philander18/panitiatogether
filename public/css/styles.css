@@ -308,12 +308,13 @@ span.fa {
     display: grid;
     grid-template-columns: minmax(360px, 1fr) minmax(360px, 1fr);
     place-content: center;
+    justify-items: center;
     margin: 1rem 6px;
     gap: 1rem;
     box-sizing: border-box;
     grid-template-areas: 'input input'
         'debit kredit'
-        'summary summary';
+        'summary task';
 }
 .input-keuangan {
     display: grid;
@@ -327,35 +328,23 @@ span.fa {
     font-weight: bold;
 }
 .debit {
-    display: grid;
     grid-area: debit;
-    place-items: center;
-    grid-template-areas: 'judul'
-            'search'
-            'tabel'
-            'pagination';
 }
 .debit h3 {
     color: green;
     font-weight: bold;
+    text-align: center;
 }
 .kredit {
-    display: grid;
     grid-area: kredit;
-    place-items: center;
-    grid-template-areas: 'judul'
-            'search'
-            'tabel'
-            'pagination';
 }
 .kredit h3 {
     color: red;
     font-weight: bold;
+    text-align: center;
 }
 .summary-keuangan {
-    display: grid;
     grid-area: summary;
-    place-items: center;
 }
 .keuangan-search {
     grid-area: search;
@@ -364,6 +353,32 @@ span.fa {
     column-gap: 5px;
     place-items: center;
 }
+
+.phil-tabel {
+    display: grid;
+    grid-template-columns: minmax(360px, 450px);
+    place-content: center;
+    row-gap: 0.5rem;
+    grid-template-areas: 'search'
+        'tabel'
+}
+.phil-tabel .search {
+    display: grid;
+    grid-area: search;
+    grid-template-columns: 60px 1fr;
+    column-gap: 0.3rem;
+    place-items: center start;
+    margin: 0px 0.5rem;
+    box-sizing: border-box;
+}
+.phil-tabel .tabel {
+    display: grid;
+    grid-area: tabel;
+    grid-template-columns: 1fr;
+    margin: 0px 0.5rem;
+    box-sizing: border-box;
+}
+
 /* Modal form input keuangan */
 div.form-modal {
     display: flex;
@@ -371,9 +386,11 @@ div.form-modal {
     margin-bottom: 8px;
 }
 div.form-modal label {
-    flex: 1;
-    text-align: center;
+    flex: 1.8;
+    text-align: start;
 }
 div.form-modal input,div.form-modal textarea,div.form-modal select {
-    flex: 4;
+    flex: 3.2;
 }
+
+
