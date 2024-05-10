@@ -10,10 +10,10 @@
         <div class="phil-tabel">
             <div class="search">
                 <label class="text-dark">Search :</label>
-                <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keyword">
+                <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keyword-debit">
             </div>
-            <div class="tabel">
-                <table id="tabelDataDebit" class="table table-striped" style="width:100%">
+            <div class="tabel tabel-debit">
+                <table class="table table-striped" style="width:100%">
                     <thead>
                         <tr class="table-dark">
                             <th class="text-center">Tanggal</th>
@@ -33,7 +33,7 @@
                 </table>
                 <?php if ($debit) : ?>
                     <div aria-label="Page navigation">
-                        <ul class="pagination">
+                        <ul class="pagination mb-0">
                             <?php if ($pagination_debit['first']) : ?>
                                 <li class="page-item">
                                     <button class="page-link text-dark linkD" aria-label="First" id="first" name="first" data-page="1">
@@ -73,6 +73,7 @@
                     </div>
                 <?php endif; ?>
             </div>
+            <h6 class="text-black m-2" style="text-shadow: 2px 2px white;">Jumlah Uang Masuk : <?= 'Rp ' . number_format($jumlah_debit, 0, ',', '.'); ?></h6>
         </div>
     </div>
     <div class="kredit">
@@ -80,10 +81,10 @@
         <div class="phil-tabel">
             <div class="search">
                 <label class="text-dark">Search :</label>
-                <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keyword">
+                <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keyword-kredit">
             </div>
-            <div class="tabel">
-                <table id="tabelDataDebit" class="table table-striped" style="width:100%">
+            <div class="tabel tabel-kredit">
+                <table class="table table-striped" style="width:100%">
                     <thead>
                         <tr class="table-dark">
                             <th class="text-center">Tanggal</th>
@@ -103,7 +104,7 @@
                 </table>
                 <?php if ($kredit) : ?>
                     <div aria-label="Page navigation">
-                        <ul class="pagination">
+                        <ul class="pagination mb-0">
                             <?php if ($pagination_kredit['first']) : ?>
                                 <li class="page-item">
                                     <button class="page-link text-dark linkD" aria-label="First" id="first" name="first" data-page="1">
@@ -143,31 +144,85 @@
                     </div>
                 <?php endif; ?>
             </div>
+            <h6 class="text-black m-2" style="text-shadow: 2px 2px white;">Jumlah Uang Keluar : <?= 'Rp ' . number_format($jumlah_kredit, 0, ',', '.'); ?></h6>
         </div>
     </div>
-    <div class="summary-keuangan phil-tabel">
-        <div class="search">
-            <label class="text-dark">Search :</label>
-            <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keyword">
-        </div>
-        <div class="tabel">
-            <table id="tabelDataDebit" class="table table-striped mb-0" style="width:100%">
-                <thead>
-                    <tr class="table-dark">
-                        <th class="text-center">Tanggal</th>
-                        <th class="text-center">Judul</th>
-                        <th class="text-center">Jumlah</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-center align-middle m-1 p-1 text-dark" style="width: 95px;">20-05-2024</td>
-                        <td class="align-middle m-1 p-1 text-dark" style="width: auto; text-align: justify;">Donasi Herry Totalis</td>
-                        <td class="text-end align-middle m-1 p-1 text-dark" style="width: 100px;"><?= number_format(50000000, 0, ',', '.'); ?></td>
-                    </tr>
-                </tbody>
-            </table>
-            <h2>test</h2>
+    <div class="hand">
+        <h3>Flow Cash Bendahara</h3>
+        <div class="phil-tabel">
+            <div class="search">
+                <label class="text-dark">Search :</label>
+                <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keyword-flow">
+            </div>
+            <div class=" tabel tabel-flow">
+                <table class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr class="table-dark">
+                            <th class="text-center" style="width: 90px;">Tanggal</th>
+                            <th class="text-center" style="width: auto;">Ke</th>
+                            <th class="text-center" style="width: 90px;">Nama</th>
+                            <th class="text-center" style="width: 90px;">Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center align-middle m-1 p-1 text-dark"><?= date("d-m-Y", strtotime('2024-05-10')); ?></td>
+                            <td class="align-middle m-1 p-1 text-dark" style="width: auto;">Acara</td>
+                            <td class="align-middle m-1 p-1 text-dark">herry</td>
+                            <td class="text-end align-middle m-1 p-1 text-dark"><?= number_format(500000, 0, ',', '.'); ?></td>
+                        </tr>
+                        <?php foreach ($flow as $row) : ?>
+                            <tr>
+                                <td class="text-center align-middle m-1 p-1 text-dark"><?= date("d-m-Y", strtotime($row["tanggal"])); ?></td>
+                                <td class="align-middle m-1 p-1 text-dark" style="width: auto;"><?= $row["keterangan"]; ?></td>
+                                <td class="align-middle m-1 p-1 text-dark"><?= $row["pic"]; ?></td>
+                                <td class="text-end align-middle m-1 p-1 text-dark"><?= number_format($row["jumlah"], 0, ',', '.'); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php if ($flow) : ?>
+                    <div aria-label="Page navigation">
+                        <ul class="pagination mb-0">
+                            <?php if ($pagination_flow['first']) : ?>
+                                <li class="page-item">
+                                    <button class="page-link text-dark linkD" aria-label="First" id="first" name="first" data-page="1">
+                                        <span aria-hidden="false">First</span>
+                                    </button>
+                                </li>
+                            <?php endif ?>
+                            <?php if ($pagination_flow['previous']) : ?>
+                                <li class="page-item">
+                                    <button class="page-link text-dark linkD" aria-label="Previous" id="previous" name="previous" data-page="<?= $page - 1; ?>">
+                                        <span aria-hidden=" true">Previous</span>
+                                    </button>
+                                </li>
+                            <?php endif ?>
+                            <?php foreach ($pagination_flow['number'] as $number) : ?>
+                                <li class="page-item <?= $pagination_flow['page'] == $number ? 'active' : '' ?>">
+                                    <button class="page-link text-dark linkD" id="nomor<?= $number; ?>" name="nomor<?= $number; ?>" data-page="<?= $number; ?>">
+                                        <span aria-hidden="true"><?= $number; ?></span>
+                                    </button>
+                                </li>
+                            <?php endforeach ?>
+                            <?php if ($pagination_flow['next']) : ?>
+                                <li class="page-item">
+                                    <button class="page-link text-dark linkD" aria-label="Next" id="next" name="next" data-page="<?= $page + 1; ?>">
+                                        <span aria-hidden=" true">Next</span>
+                                    </button>
+                                </li>
+                            <?php endif ?>
+                            <?php if ($pagination_flow['last']) : ?>
+                                <li class="page-item">
+                                    <button class="page-link text-dark linkD" aria-label="<?= $last_flow; ?>" id="last" name="last" data-page="<?= $last_flow; ?>">
+                                        <span aria-hidden="true"><?= $last_flow; ?></span>
+                                    </button>
+                                </li>
+                            <?php endif ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>

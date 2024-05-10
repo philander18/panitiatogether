@@ -343,8 +343,14 @@ span.fa {
     font-weight: bold;
     text-align: center;
 }
-.summary-keuangan {
+.hand {
     grid-area: summary;
+}
+
+.hand h3{
+  color: rgb(0, 66, 248);
+  font-weight: bold;
+  text-align: center;
 }
 .keuangan-search {
     grid-area: search;

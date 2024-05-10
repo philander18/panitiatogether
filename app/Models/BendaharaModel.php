@@ -54,19 +54,20 @@ class BendaharaModel extends Model
     }
     public function searchkeuangan($keyword, $jumlahlist, $index, $jenis)
     {
-
         if ($jenis == 'debit') {
             $where = "keterangan like '%" . $keyword . "%' and jenis = 'debit'";
             $all = $this->db->table('keuangan')->select('id, tanggal, keterangan, jumlah, pic, jenis')->where($where)->orderBy('tanggal DESC')->get()->getResultArray();
             $data['pendaftaran'] = [
-                'tanggal' => '2024-04-30',
+                'tanggal' => date('d-m-Y'),
                 'keterangan' => 'Pendaftaran',
-                'jumlah' => 1000000
+                'jumlah' => $this->db->table('peserta')->select('sum(bayar) as jumlah')->get()->getResultArray()[0]['jumlah']
             ];
             $all = array_merge($data, $all);
+            $jumlah_uang = $this->db->table('keuangan')->select('sum(jumlah) as jumlah')->where("jenis = 'debit'")->get()->getResultArray()[0]['jumlah'] + $this->db->table('peserta')->select('sum(bayar) as jumlah')->get()->getResultArray()[0]['jumlah'];
         } elseif ($jenis == 'kredit') {
             $where = "keterangan like '%" . $keyword . "%' and jenis = 'kredit'";
             $all = $this->db->table('keuangan')->select('id, tanggal, keterangan, jumlah, pic, jenis')->where($where)->orderBy('tanggal DESC')->get()->getResultArray();
+            $jumlah_uang = $this->db->table('keuangan')->select('sum(jumlah) as jumlah')->where("jenis = 'kredit'")->get()->getResultArray()[0]['jumlah'];
         } else {
             $where = "keterangan like '%" . $keyword . "%'";
         }
@@ -77,6 +78,7 @@ class BendaharaModel extends Model
         $data['lastpage'] = $lastpage;
         $data['tabel'] = $tabel;
         $data['jumlah'] = $jumlahdata;
+        $data['jumlah_uang'] = $jumlah_uang;
         return $data;
     }
 }
