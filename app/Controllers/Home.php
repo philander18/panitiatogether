@@ -11,4 +11,8 @@ class Home extends BaseController
         ];
         return view('Home/index', $data);
     }
+    public function flash()
+    {
+        return view('Templates/flash');
+    }
 }

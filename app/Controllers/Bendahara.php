@@ -148,7 +148,7 @@ class Bendahara extends BaseController
     {
         $date = new DateTime();
         $date = $date->format('Y-m-d H:i:s');
-        $data = [
+        $data_input = [
             'tanggal' => $_POST['tanggal'],
             'keterangan' => $_POST['keterangan'],
             'jenis' => $_POST['jenis'],
@@ -156,16 +156,74 @@ class Bendahara extends BaseController
             'pic' => user()->username,
             'updated_at' => $date
         ];
-        $this->BendaharaModel->tambah_keuangan($data);
+        if ($_POST['id'] == '') {
+            if ($this->BendaharaModel->tambah_keuangan($data_input)) {
+                session()->setFlashdata('pesan', 'Tambah Input keuangan Berhasil.');
+            } else {
+                session()->setFlashdata('pesan', 'Tambah Input keuangan Gagal.');
+            }
+        } else {
+            if ($this->BendaharaModel->update_keuangan($data_input, $_POST['id'])) {
+                session()->setFlashdata('pesan', 'Update Input Keuangan Berhasil.');
+            } else {
+                session()->setFlashdata('pesan', 'Update Input keuangan Gagal.');
+            }
+        }
+    }
+    public function refresh_tabel_debit()
+    {
+        if (isset($_POST['keyword'])) {
+            $keyword = $_POST['keyword'];
+        } else {
+            $keyword = '';
+        }
+        $page = $_POST['page'];
+        if ($page == 1) {
+            $index = 0;
+        } else {
+            $index = ($page - 1) * $this->jumlahlist;
+        }
+        $data = [
+            'debit' => $this->BendaharaModel->searchkeuangan($keyword, $this->jumlahlist, $index, 'debit')['tabel'],
+            'pagination_debit' => $this->pagination($page, $this->BendaharaModel->searchkeuangan($keyword, $this->jumlahlist, $index, 'debit')['lastpage']),
+            'last_debit' => $this->BendaharaModel->searchkeuangan($keyword, $this->jumlahlist, $index, 'debit')['lastpage'],
+            'jumlah_debit' => $this->BendaharaModel->searchkeuangan($keyword, $this->jumlahlist, $index, 'debit')['jumlah_uang'],
+            'page' => $page,
+        ];
+        return view('Bendahara/Tabel/debit', $data);
+    }
+    public function refresh_tabel_kredit()
+    {
+        if (isset($_POST['keyword'])) {
+            $keyword = $_POST['keyword'];
+        } else {
+            $keyword = '';
+        }
+        $page = $_POST['page'];
+        if ($page == 1) {
+            $index = 0;
+        } else {
+            $index = ($page - 1) * $this->jumlahlist;
+        }
+        $data = [
+            'kredit' => $this->BendaharaModel->searchkeuangan($keyword, $this->jumlahlist, $index, 'kredit')['tabel'],
+            'pagination_kredit' => $this->pagination($page, $this->BendaharaModel->searchkeuangan($keyword, $this->jumlahlist, $index, 'kredit')['lastpage']),
+            'last_kredit' => $this->BendaharaModel->searchkeuangan($keyword, $this->jumlahlist, $index, 'kredit')['lastpage'],
+            'jumlah_kredit' => $this->BendaharaModel->searchkeuangan($keyword, $this->jumlahlist, $index, 'kredit')['jumlah_uang'],
+            'page' => $page,
+        ];
+        return view('Bendahara/Tabel/kredit', $data);
+    }
+    public function delete_keuangan()
+    {
+        if ($this->BendaharaModel->delete_keuangan($_POST['id'])) {
+            session()->setFlashdata('pesan', 'Hapus Data Keuangan Berhasil.');
+        } else {
+            session()->setFlashdata('pesan', 'Hapus Data Keuangan Gagal.');
+        }
     }
     public function keuangan()
     {
-        // $data['a'] = [
-        //     'id' => 10,
-        //     'tanggal' => '2024-04-30'
-        // ];
-        // $test = array_merge($data, $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'debit')['tabel']);
-        // d($test);
         $page = 1;
         $data = [
             'judul' => 'Bendahara',
@@ -177,17 +235,92 @@ class Bendahara extends BaseController
             'pagination_kredit' => $this->pagination($page, $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'kredit')['lastpage']),
             'last_kredit' => $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'kredit')['lastpage'],
             'jumlah_kredit' => $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'kredit')['jumlah_uang'],
-            'flow' => [],
-            'pagination_flow' => [],
-            'last_flow' => [],
+            'flow' => $this->BendaharaModel->searchflow("", $this->jumlahlist, 0)['tabel'],
+            'pagination_flow' => $this->pagination($page, $this->BendaharaModel->searchflow("", $this->jumlahlist, 0)['lastpage']),
+            'last_flow' => $this->BendaharaModel->searchflow("", $this->jumlahlist, 0)['lastpage'],
+            'hand' => $this->BendaharaModel->data_hand("", $this->jumlahlist, 0)['tabel'],
+            'pagination_hand' => $this->pagination($page, $this->BendaharaModel->data_hand("", $this->jumlahlist, 0)['lastpage']),
+            'last_hand' => $this->BendaharaModel->data_hand("", $this->jumlahlist, 0)['lastpage'],
             'page' => $page,
+            'listpanitia' => $this->BendaharaModel->listpanitia(),
             'halaman' => 'bendahara',
             'method' => 'keuangan'
         ];
         return view('Bendahara/keuangan', $data);
     }
-
-
+    public function get_data_keuangan()
+    {
+        echo json_encode($this->BendaharaModel->get_data_keuangan_byid($_POST['id'])[0]);
+    }
+    // Menangani tambah data flow
+    public function input_flow()
+    {
+        $date = new DateTime();
+        $date = $date->format('Y-m-d H:i:s');
+        $data_input = [
+            'tanggal' => $_POST['tanggal'],
+            'keterangan' => 'ke ' . $this->BendaharaModel->getposisi($_POST['pic']),
+            'jenis' => 'transit',
+            'jumlah' => $_POST['jumlah'],
+            'pic' => $_POST['pic'],
+            'updated_at' => $date
+        ];
+        if ($_POST['id'] == '') {
+            if ($this->BendaharaModel->tambah_keuangan($data_input)) {
+                session()->setFlashdata('pesan', 'Tambah Input flow Berhasil.');
+            } else {
+                session()->setFlashdata('pesan', 'Tambah Input flow Gagal.');
+            }
+        } else {
+            if ($this->BendaharaModel->update_keuangan($data_input, $_POST['id'])) {
+                session()->setFlashdata('pesan', 'Update Input flow Berhasil.');
+            } else {
+                session()->setFlashdata('pesan', 'Update Input flow Gagal.');
+            }
+        }
+    }
+    public function refresh_tabel_flow()
+    {
+        if (isset($_POST['keyword'])) {
+            $keyword = $_POST['keyword'];
+        } else {
+            $keyword = '';
+        }
+        $page = $_POST['page'];
+        if ($page == 1) {
+            $index = 0;
+        } else {
+            $index = ($page - 1) * $this->jumlahlist;
+        }
+        $data = [
+            'flow' => $this->BendaharaModel->searchflow($keyword, $this->jumlahlist, $index)['tabel'],
+            'pagination_flow' => $this->pagination($page, $this->BendaharaModel->searchflow($keyword, $this->jumlahlist, $index)['lastpage']),
+            'last_flow' => $this->BendaharaModel->searchflow($keyword, $this->jumlahlist, $index)['lastpage'],
+            'page' => $page,
+        ];
+        return view('Bendahara/Tabel/flow', $data);
+    }
+    public function refresh_tabel_hand()
+    {
+        if (isset($_POST['keyword'])) {
+            $keyword = $_POST['keyword'];
+        } else {
+            $keyword = '';
+        }
+        $page = $_POST['page'];
+        if ($page == 1) {
+            $index = 0;
+        } else {
+            $index = ($page - 1) * $this->jumlahlist;
+        }
+        $data = [
+            'hand' => $this->BendaharaModel->data_hand($keyword, $this->jumlahlist, $index)['tabel'],
+            'pagination_hand' => $this->pagination($page, $this->BendaharaModel->data_hand($keyword, $this->jumlahlist, $index)['lastpage']),
+            'last_hand' => $this->BendaharaModel->data_hand($keyword, $this->jumlahlist, $index)['lastpage'],
+            'page' => $page,
+        ];
+        return view('Bendahara/Tabel/hand', $data);
+    }
     public function pagination($page, $lastpage)
     {
         $pagination = [

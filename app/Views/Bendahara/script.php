@@ -7,6 +7,78 @@
         $('#bayar').val('');
     }
 
+    function refresh_debit(keyword, page) {
+        $.ajax({
+            url: method_url('Bendahara', 'refresh_tabel_debit'),
+            data: {
+                keyword: keyword,
+                page: page,
+            },
+            method: 'post',
+            dataType: 'html',
+            success: function(data) {
+                $('.tabel-debit').html(data);
+            }
+        });
+    }
+
+    function refresh_kredit(keyword, page) {
+        $.ajax({
+            url: method_url('Bendahara', 'refresh_tabel_kredit'),
+            data: {
+                keyword: keyword,
+                page: page,
+            },
+            method: 'post',
+            dataType: 'html',
+            success: function(data) {
+                $('.tabel-kredit').html(data);
+            }
+        });
+    }
+
+    function refresh_flow(keyword, page) {
+        $.ajax({
+            url: method_url('Bendahara', 'refresh_tabel_flow'),
+            data: {
+                keyword: keyword,
+                page: page,
+            },
+            method: 'post',
+            dataType: 'html',
+            success: function(data) {
+                $('.tabel-flow').html(data);
+            }
+        });
+    }
+
+    function refresh_hand(keyword, page) {
+        $.ajax({
+            url: method_url('Bendahara', 'refresh_tabel_hand'),
+            data: {
+                keyword: keyword,
+                page: page,
+            },
+            method: 'post',
+            dataType: 'html',
+            success: function(data) {
+                $('.tabel-hand').html(data);
+            }
+        });
+    }
+
+    function tampil_flash() {
+        $.ajax({
+            url: method_url('Home', 'flash'),
+            data: {},
+            method: 'post',
+            dataType: 'html',
+            success: function(data) {
+                $('.flash-update').html(data);
+            }
+        });
+    }
+
     $(document).ready(function() {
         $('#keywordpanitia').on('keyup', function() {
             var keyword = $(this).val(),
@@ -99,11 +171,6 @@
                 }
             });
         });
-
-        $('.diterima').on('click', function() {
-            $('#id').val($(this).data('id'))
-        });
-
         $('.dihapus').on('click', function() {
             $('#idhapus').val($(this).data('id'))
         });
@@ -143,20 +210,24 @@
 
         // Menangani tambah data keuangan
         $('#tombol-tambah-keuangan').on('click', function() {
-            $('#tanggal').val('<?= date('Y-m-d'); ?>');
-            $('#keterangan').val('');
-            $('#jenis').val('debit');
-            $('#jumlah').val('');
+            $('#tanggal-keuangan').val('<?= date('Y-m-d'); ?>');
+            $('#keterangan-keuangan').val('');
+            $('#jenis-keuangan').val('debit');
+            $('#jumlah-keuangan').val('');
+            $('#id-keuangan').val('');
             $('#hapus-keuangan').prop('hidden', true);
+            $('#tambah-keuangan').html('Tambah');
         });
         $('#tambah-keuangan').on('click', function() {
-            const tanggal = $('#tanggal').val(),
-                keterangan = $('#keterangan').val(),
-                jenis = $('#jenis').val(),
-                jumlah = $('#jumlah').val();
+            const tanggal = $('#tanggal-keuangan').val(),
+                keterangan = $('#keterangan-keuangan').val(),
+                jenis = $('#jenis-keuangan').val(),
+                id = $('#id-keuangan').val(),
+                jumlah = $('#jumlah-keuangan').val();
             $.ajax({
                 url: method_url('Bendahara', 'input_keuangan'),
                 data: {
+                    id: id,
                     tanggal: tanggal,
                     keterangan: keterangan,
                     jenis: jenis,
@@ -165,12 +236,149 @@
                 method: 'post',
                 dataType: 'html',
                 success: function(data) {
-                    console.log('ok');
+                    tampil_flash();
+                    refresh_debit("", 1);
+                    refresh_kredit("", 1);
+                    refresh_flow("", 1);
+                    refresh_hand("", 1);
+                }
+            });
+        });
+        $('#ya-hapus-keuangan').on('click', function() {
+            const id = $('#id-keuangan').val();
+            $.ajax({
+                url: method_url('Bendahara', 'delete_keuangan'),
+                data: {
+                    id: id,
+                },
+                method: 'post',
+                dataType: 'html',
+                success: function(data) {
+                    tampil_flash();
+                    refresh_debit("", 1);
+                    refresh_kredit("", 1);
+                    refresh_flow("", 1);
+                    refresh_hand("", 1);
+                }
+            });
+        });
+        $('.modal-keuangan').on('click', function() {
+            const id = $(this).data('id');
+            $('#tambah-keuangan').prop('hidden', false);
+            $('#tambah-keuangan').html('Update');
+            $('#hapus-keuangan').prop('hidden', false);
+            $.ajax({
+                url: method_url('Bendahara', 'get_data_keuangan'),
+                data: {
+                    id: id,
+                },
+                method: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    $('#tanggal-keuangan').val(data.tanggal);
+                    $('#keterangan-keuangan').val(data.keterangan);
+                    $('#jenis-keuangan').val(data.jenis);
+                    $('#jumlah-keuangan').val(data.jumlah);
+                    $('#id-keuangan').val(data.id);
+                }
+            });
+        });
+        $('#keyword-debit').on('keyup', function() {
+            refresh_debit($(this).val(), 1);
+        });
+        $(".link-debit").on('click', function() {
+            refresh_debit($('#keyword-debit').val(), $(this).data('page'));
+        });
+        $('#keyword-kredit').on('keyup', function() {
+            refresh_kredit($(this).val(), 1);
+        });
+        $(".link-kredit").on('click', function() {
+            refresh_kredit($('#keyword-kredit').val(), $(this).data('page'));
+        });
+
+        // Menangani tambah data flow
+        $('#tombol-tambah-flow').on('click', function() {
+            $('#tanggal-flow').val('<?= date('Y-m-d'); ?>');
+            $('#pic-flow').val('');
+            $('#jumlah-flow').val('');
+            $('#id-flow').val('');
+            $('#tambah-flow').html('Tambah');
+            $('#hapus-flow').prop('hidden', true);
+        });
+        $('#tambah-flow').on('click', function() {
+            const tanggal = $('#tanggal-flow').val(),
+                pic = $('#pic-flow').val(),
+                id = $('#id-flow').val(),
+                jumlah = $('#jumlah-flow').val();
+            $.ajax({
+                url: method_url('Bendahara', 'input_flow'),
+                data: {
+                    id: id,
+                    tanggal: tanggal,
+                    pic: pic,
+                    jumlah: jumlah,
+                },
+                method: 'post',
+                dataType: 'html',
+                success: function(data) {
+                    tampil_flash();
+                    refresh_flow("", 1);
+                    refresh_hand("", 1);
+                }
+            });
+        });
+        $('.modal-flow').on('click', function() {
+            const id = $(this).data('id');
+            $('#tambah-flow').prop('hidden', false);
+            $('#tambah-flow').html('Update');
+            $('#hapus-flow').prop('hidden', false);
+            $.ajax({
+                url: method_url('Bendahara', 'get_data_keuangan'),
+                data: {
+                    id: id,
+                },
+                method: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    $('#id-flow').val(data.id);
+                    $('#tanggal-flow').val(data.tanggal);
+                    $('#pic-flow').val(data.pic);
+                    $('#jumlah-flow').val(data.jumlah);
+                }
+            });
+        });
+        $('#keyword-flow').on('keyup', function() {
+            refresh_flow($(this).val(), 1);
+        });
+        $(".link-flow").on('click', function() {
+            refresh_flow($('#keyword-flow').val(), $(this).data('page'));
+        });
+        $('#ya-hapus-flow').on('click', function() {
+            const id = $('#id-flow').val();
+            $.ajax({
+                url: method_url('Bendahara', 'delete_keuangan'),
+                data: {
+                    id: id,
+                },
+                method: 'post',
+                dataType: 'html',
+                success: function(data) {
+                    tampil_flash();
+                    refresh_debit("", 1);
+                    refresh_kredit("", 1);
+                    refresh_flow("", 1);
+                    refresh_hand("", 1);
                 }
             });
         });
 
-
+        // Menangani tabel hand
+        $('#keyword-hand').on('keyup', function() {
+            refresh_hand($(this).val(), 1);
+        });
+        $(".link-hand").on('click', function() {
+            refresh_hand($('#keyword-hand').val(), $(this).data('page'));
+        });
         $('.setor').on('click', function() {
             var jumlah = $('#jumlahSetor').val(),
                 baseurl = $('#baseurl').val();
