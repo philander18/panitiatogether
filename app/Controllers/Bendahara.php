@@ -321,6 +321,14 @@ class Bendahara extends BaseController
         ];
         return view('Bendahara/Tabel/hand', $data);
     }
+    public function refresh_summary()
+    {
+        $data = [
+            'jumlah_debit' => $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'debit')['jumlah_uang'],
+            'jumlah_kredit' => $this->BendaharaModel->searchkeuangan("", $this->jumlahlist, 0, 'kredit')['jumlah_uang'],
+        ];
+        return view('Bendahara/Tabel/summary', $data);
+    }
     public function pagination($page, $lastpage)
     {
         $pagination = [

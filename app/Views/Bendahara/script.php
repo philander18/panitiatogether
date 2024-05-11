@@ -67,6 +67,18 @@
         });
     }
 
+    function refresh_summary() {
+        $.ajax({
+            url: method_url('Bendahara', 'refresh_summary'),
+            data: {},
+            method: 'post',
+            dataType: 'html',
+            success: function(data) {
+                $('.data-summary').html(data);
+            }
+        });
+    }
+
     function tampil_flash() {
         $.ajax({
             url: method_url('Home', 'flash'),
@@ -241,6 +253,7 @@
                     refresh_kredit("", 1);
                     refresh_flow("", 1);
                     refresh_hand("", 1);
+                    refresh_summary();
                 }
             });
         });
@@ -259,6 +272,7 @@
                     refresh_kredit("", 1);
                     refresh_flow("", 1);
                     refresh_hand("", 1);
+                    refresh_summary();
                 }
             });
         });
@@ -324,6 +338,7 @@
                     tampil_flash();
                     refresh_flow("", 1);
                     refresh_hand("", 1);
+                    refresh_summary();
                 }
             });
         });
@@ -368,6 +383,7 @@
                     refresh_kredit("", 1);
                     refresh_flow("", 1);
                     refresh_hand("", 1);
+                    refresh_summary();
                 }
             });
         });
