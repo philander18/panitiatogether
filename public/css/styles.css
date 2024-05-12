@@ -3,6 +3,9 @@ html, body {
     padding: 0;
     font-family: "Mukta", sans-serif;
 }
+body {
+    width: 100vw;
+}
 
 body, .modal-content {
     background-image: url(../images/background.png);
