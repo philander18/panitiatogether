@@ -155,6 +155,7 @@ nav {
       transform: translateX(100%);
       transition: all 0.2s;
       opacity: 0;
+      display: none;
     }
     nav ul li {
         width: 120px;
@@ -164,6 +165,7 @@ nav {
     nav ul.slide {
       transform: translateX(0);
       opacity: 1;
+      display: flex;
     }
     .menu-toggles {
       display: flex;
