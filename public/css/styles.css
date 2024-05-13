@@ -46,6 +46,10 @@ body, .modal-content {
     font-weight: 800;
     font-style: normal;
   }
+
+  a {
+    margin-bottom: 0.5rem;
+  }
   /* Navbar */
 nav {
     display: flex;
@@ -378,30 +382,91 @@ span.fa {
     column-gap: 5px;
     place-items: center;
 }
-
+/* default tabel dari philander */
 .phil-tabel {
-    display: grid;
-    grid-template-columns: minmax(360px, 600px);
-    place-content: center;
-    row-gap: 0.5rem;
-    grid-template-areas: 'search'
-        'tabel'
+  display: grid;
+  grid-template-columns: minmax(360px, 600px);
+  place-content: center;
+  row-gap: 0.5rem;
+  grid-template-areas: 'search'
+      'tabel'
 }
 .phil-tabel .search {
-    display: grid;
-    grid-area: search;
-    grid-template-columns: 60px 1fr;
-    column-gap: 0.3rem;
-    place-items: center start;
-    margin: 0px 0.5rem;
-    box-sizing: border-box;
+  display: grid;
+  grid-area: search;
+  grid-template-columns: 60px 1fr;
+  column-gap: 0.3rem;
+  place-items: center start;
+  margin: 0px 0.5rem;
+  box-sizing: border-box;
 }
 .phil-tabel .tabel {
+  display: grid;
+  grid-area: tabel;
+  grid-template-columns: 1fr;
+  margin: 0px 0.5rem;
+  box-sizing: border-box;
+}
+
+/* menangani halaman tugas */
+.konten-tugas {
     display: grid;
-    grid-area: tabel;
-    grid-template-columns: 1fr;
-    margin: 0px 0.5rem;
+    grid-template-columns: 2fr 1fr;
+    place-content: center;
+    margin: 1rem;
+    gap: 1rem;
     box-sizing: border-box;
+    grid-template-areas: 'rencana hasil';
+}
+.rencana {
+  grid-area: rencana;
+}
+.rencana h4 {
+  text-align: center;
+}
+.hasil {
+  grid-area: hasil;
+}
+.hasil h4 {
+  text-align: center;
+}
+/* default kotak dari philander */
+.phil-kotak {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  justify-items: center;
+  row-gap: 0.5rem;
+  box-sizing: border-box;
+  grid-template-areas: 'search'
+      'kotak';
+}
+.phil-kotak .search-kotak {
+  display: grid;
+  grid-area: search;
+  grid-template-columns: 60px 240px;
+  column-gap: 0.3rem;
+  place-items: center start;
+  margin-right: 0.5rem;
+  box-sizing: border-box;
+  justify-self: start;
+}
+.search-kotak label, .search-kotak input {
+  box-sizing: border-box;
+}
+.phil-kotak .konten-kotak2 {
+  display: grid;
+  grid-area: kotak;
+  grid-template-columns: minmax(320px,450px) minmax(320px,450px);
+  gap: 0.5rem;
+  box-sizing: border-box;
+}
+.phil-kotak .konten-kotak1 {
+  display: grid;
+  grid-area: kotak;
+  grid-template-columns: minmax(320px,450px);
+  gap: 0.5rem;
+  box-sizing: border-box;
 }
 
 /* Modal form input keuangan */
@@ -428,6 +493,36 @@ div.form-modal input,div.form-modal textarea,div.form-modal select {
             'flow' 
             'summary';
     }
+
+    
+    
+  }
+  /* Ukuran tablet */
+  @media screen and (max-width: 991.98px) {
+    .konten-tugas {
+        grid-template-columns: 1fr 1fr;
+    }
+    .phil-kotak .konten-kotak2 {
+        grid-template-columns: minmax(320px,450px);
+    }
+  }
+  /* Ukuran landscape mobile */
+  @media screen and (max-width: 767.98px) {
+    .konten-tugas {
+        grid-template-columns: 1fr;
+        grid-template-areas: 'rencana'
+          'hasil';
+    }
+    .phil-kotak .konten-kotak2 {
+      grid-template-columns: minmax(320px,450px);
+    }
+    .phil-kotak .search-kotak {
+      justify-self: center;
+    }
+  }
+/* Ukuran mobile */
+@media screen and (max-width: 575.98px) {
+
 }
 
 

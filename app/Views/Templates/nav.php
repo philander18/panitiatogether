@@ -4,7 +4,7 @@
     </div>
     <ul>
         <li><a href="<?= base_url(); ?>">Home</a></li>
-        <li><a href="" class="<?= ($method == 'tugas') ? "aktif" : ""; ?>">Tugas</a></li>
+        <li><a href="<?= base_url() . $judul; ?>" class="<?= ($method == 'tugas') ? "aktif" : ""; ?>">Tugas</a></li>
         <?php if (($halaman == "pengurus") || ($halaman == "ketua") || ($halaman == "sekretaris") || ($halaman == "bendahara")) : ?>
             <li><a href="" class="<?= ($method == 'approval') ? "aktif" : ""; ?>">Approval</a></li>
         <?php endif ?>
