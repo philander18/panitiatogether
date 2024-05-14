@@ -3,9 +3,6 @@ html, body {
     padding: 0;
     font-family: "Mukta", sans-serif;
 }
-body {
-    width: 100vw;
-}
 
 body, .modal-content {
     background-image: url(../images/background.png);
@@ -427,6 +424,24 @@ div.form-modal input,div.form-modal textarea,div.form-modal select {
             'kredit'
             'flow' 
             'summary';
+    }
+
+    /* Menangani tugas */
+    .konten-task {
+        display: grid;
+        grid-template-columns: minmax(360px, 1fr) minmax(360px, 1fr);
+        place-content: center;
+        justify-items: center;
+        margin: 1rem 6px;
+        gap: 1rem;
+        box-sizing: border-box;
+        grid-template-areas: 'rencana hasil';
+    }
+    .rencana {
+        grid-area: rencana;
+    }
+    .hasil {
+        grid-area: hasil;
     }
 }
 

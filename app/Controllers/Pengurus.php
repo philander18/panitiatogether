@@ -18,8 +18,9 @@ class Pengurus extends BaseController
         $page = 1;
         $data = [
             'judul' => 'Pengurus',
-            'halaman' => 'Pengurus',
-            'method' => 'rencana'
+            'halaman' => 'pengurus',
+            'method' => 'rencana',
+            'posisi' => $this->TaskModel->getposisi(user()->username),
         ];
         return view('Task/index', $data);
     }
